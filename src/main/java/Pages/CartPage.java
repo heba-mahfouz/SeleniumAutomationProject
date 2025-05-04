@@ -1,6 +1,5 @@
-package PageOpjects;
+package Pages;
 
-import Abstract.AbstractComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,8 +10,7 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.List;
 
 
-
-public class CartPage extends AbstractComponent {
+public class CartPage extends BasePage {
     WebDriver driver;
 
     public CartPage(WebDriver driver) {
@@ -20,33 +18,37 @@ public class CartPage extends AbstractComponent {
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
-   @FindBy (xpath = "//td/a[@href='/build-your-cheap-own-computer']")
-   private List<WebElement> cartProduct;
-    @FindBy (xpath = "//button[@class='button-1 checkout-button']")
+
+    @FindBy(xpath = "//td/a[@href='/build-your-cheap-own-computer']")
+    private List<WebElement> cartProduct;
+    @FindBy(xpath = "//button[@class='button-1 checkout-button']")
     WebElement checkOut;
 
     public Boolean verifyProductDisply(String productName) {
         boolean match = cartProduct.stream().
-                anyMatch(product->product.getText().equalsIgnoreCase(productName));
+                anyMatch(product -> product.getText().equalsIgnoreCase(productName));
 
-       return match;
+        return match;
     }
+
     public void dropDownList() {
 
-     WebElement staticDropDown=driver.findElement(By.cssSelector("#CountryId"));
-     Select dropDown= new Select(staticDropDown);
+        WebElement staticDropDown = driver.findElement(By.cssSelector("#CountryId"));
+        Select dropDown = new Select(staticDropDown);
         dropDown.selectByVisibleText("Andorra");
     }
-    public void agreeCheckbox(){
-        WebElement checkbox =driver.findElement(By.cssSelector("#termsofservice"));
+
+    public void agreeCheckbox() {
+        WebElement checkbox = driver.findElement(By.cssSelector("#termsofservice"));
         if (!checkbox.isSelected()) {
             checkbox.click();
         }
     }
-public CheckOut goTOCheckOut() throws InterruptedException {
+
+    public CheckOutPage goTOCheckOut() throws InterruptedException {
         checkOut.click();
-        CheckOut checkOut=new CheckOut(driver);
+        CheckOutPage checkOut = new CheckOutPage(driver);
         return checkOut;
-}
+    }
 
 }

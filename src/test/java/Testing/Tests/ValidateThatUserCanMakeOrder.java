@@ -20,14 +20,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-public class SubmitOrderTest extends BaseTest {
+public class ValidateThatUserCanMakeOrder extends BaseTest {
     String pName = "Order Number: 1933316";
-    //String productName = "Build your own cheap computer";
 
     @Test(dataProvider = ("getData"), groups = {"Purchase"})
-    public void submitOrder( HashMap<String,String> input) throws InterruptedException {
+    public void submitOrder(HashMap<String, String> input) throws InterruptedException {
 
-        ProductCatalogue productCatalogue = landingPage.LoginApplication(input.get("email"),input.get("password"));
+        ProductCatalogue productCatalogue = loginPage.LoginApplication(input.get("email"), input.get("password"));
         productCatalogue.selecComputers();
         productCatalogue.selecDeskTops();
         List<WebElement> products = productCatalogue.getProducList();
@@ -53,40 +52,29 @@ public class SubmitOrderTest extends BaseTest {
     @Test(dependsOnMethods = {"submitOrder"})
     public void orderHistoryTest() {
 
-        ProductCatalogue productCatalogue = landingPage.LoginApplication("mahfouz123@gmail.com", "1234567");
+        ProductCatalogue productCatalogue = loginPage.LoginApplication("mahfouz123@gmail.com", "1234567");
         OrderPage orderPage = productCatalogue.goOrderPage();
         orderPage.setOrderbtn();
         boolean result = orderPage.verifyOrderDisply(pName);
         System.out.println("Verification result: " + result);
         Assert.assertTrue(result);
     }
-    public String getScreenshot(String testCaseName, WebDriver  driver) throws IOException {
-        TakesScreenshot ts=(TakesScreenshot) this.driver;
-        File source =ts.getScreenshotAs(OutputType.FILE);
-        File file=new File(System.getProperty("user.dir")+"/reports/" + testCaseName +".png");
-        FileUtils.copyFile(source,file);
-        return System.getProperty("user.dir")+"/reports/" + testCaseName +".png";
+
+    public String getScreenshot(String testCaseName, WebDriver driver) throws IOException {
+        TakesScreenshot ts = (TakesScreenshot) this.driver;
+        File source = ts.getScreenshotAs(OutputType.FILE);
+        File file = new File(System.getProperty("user.dir") + "/reports/" + testCaseName + ".png");
+        FileUtils.copyFile(source, file);
+        return System.getProperty("user.dir") + "/reports/" + testCaseName + ".png";
     }
 
 
-       @DataProvider
-        public Object[][] getData() throws IOException {
+    @DataProvider
+    public Object[][] getData() throws IOException {
         DataReader dataReader = new DataReader();
         List<HashMap<String, String>> data;
         data = dataReader.getJsonDataToMap(System.getProperty("user.dir") + "//src//test//java//Testing//Data//purchaseOrder.json");
-        return new Object[][] {{data.getFirst()}};
+        return new Object[][]{{data.getFirst()}};
     }
-/*  @DataProvider
-    public Object[][] getData() {
-        HashMap<String, String> map = new HashMap<String, String>();
-        map.put("email", "mahfouz123@gmail.com");
-        map.put("password", "1234567");
-        map.put("product", "Build your own cheap computer");
-        return new Object[][]{{map}};
-    }*/
-      /*  @DataProvider
-    public Object[][] getData()  {
-        return new Object[][] {{"mahfouz123@gmail.com","1234567","Build your own cheap computer"}};
-    }*/
 
 }

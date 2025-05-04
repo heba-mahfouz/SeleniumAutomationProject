@@ -1,6 +1,5 @@
-package PageOpjects;
+package Pages;
 
-import Abstract.AbstractComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,20 +7,20 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 
-
-public class LandingPage extends AbstractComponent {
+public class LoginPage extends BasePage {
     WebDriver driver;
 
-    public LandingPage(WebDriver driver) {
+    public LoginPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
-    @FindBy (linkText = "Log in")
+
+    @FindBy(linkText = "Log in")
     WebElement Loginbtn;
 
-    @FindBy (id = "Email")
-     WebElement UserEmail;
+    @FindBy(id = "Email")
+    WebElement UserEmail;
 
     @FindBy(id = "Password")
     WebElement UserPassword;
@@ -39,12 +38,14 @@ public class LandingPage extends AbstractComponent {
         ProductCatalogue productCatalogue = new ProductCatalogue(driver);
         return productCatalogue;
     }
-    public String getErrorMassage(){
+
+    public String getErrorMassage() {
         waitForElementToAppear(By.cssSelector("div[class='validation-summary-errors'] span"));
         return errorMassage.getText().trim();
 
     }
-    public void GoTo (){
+
+    public void GoTo() {
 
         driver.get("https://demowebshop.tricentis.com/build-your-cheap-own-computer");
     }

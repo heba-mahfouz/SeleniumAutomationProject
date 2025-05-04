@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite parallel="tests" name="All Test Suite">
+    <listeners>
+        <listener class-name="Testing.TestComponent.Listeners"/>
+    </listeners>
+
+    <test verbose="2" preserve-order="true" name="SubmitOrderTest">
+        <classes>
+            <class name="Testing.Tests.ValidateThatUserCanMakeOrder">
+            </class>
+        </classes>
+    </test>
+    <test verbose="2" preserve-order="true" name="InvalidLogin">
+        <classes>
+            <class name="Testing.Tests.InvalidLogin">
+            </class>
+        </classes>
+    </test>
+
+    <test verbose="2" preserve-order="true" name="InvalidOrder">
+        <classes>
+            <class name="Testing.Tests.InvalidOrder">
+            </class>
+        </classes>
+    </test>
+    <test verbose="2" preserve-order="true" name="ValidDataToRegister">
+        <classes>
+            <class name="Testing.Tests.ValidDataToRegister">
+            </class>
+        </classes>
+    </test>
+</suite>

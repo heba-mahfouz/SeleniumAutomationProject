@@ -1,14 +1,14 @@
-package PageOpjects;
+package Pages;
 
-import Abstract.AbstractComponent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
 import java.util.List;
 
-public class ProductCatalogue extends AbstractComponent {
+public class ProductCatalogue extends BasePage {
     WebDriver driver;
 
     public ProductCatalogue(WebDriver driver) {
@@ -26,12 +26,14 @@ public class ProductCatalogue extends AbstractComponent {
     By productBy = By.xpath("//div[@class='product-grid']/div[@class='item-box']/div[@class='product-item']/div[@class='details']/h2[@class='product-title']");
     By addToCart = By.xpath("//div[@class='details']/div[@class='add-info']/div[@class='buttons']/input[@class='button-2 product-box-add-to-cart-button']");
     By addToCart2 = By.xpath("//div/input[@class='button-1 add-to-cart-button']");
-    By animation= By.cssSelector(".bar-notification success");
-    By massage=By.cssSelector(".content");
+    By animation = By.cssSelector(".bar-notification success");
+    By massage = By.cssSelector(".content");
+
     public void selecComputers() throws InterruptedException {
         Computers.click();
 
     }
+
     public void selecDeskTops() {
 
         Desktops.click();
@@ -42,10 +44,11 @@ public class ProductCatalogue extends AbstractComponent {
         //waitForElementToAppear(productBy);
         return products;
     }
-    public WebElement getProductByName(String productName){
+
+    public WebElement getProductByName(String productName) {
         WebElement prod = getProducList().stream().
-                filter(product->product.
-                        findElement(By.xpath("//div[@class='product-grid']/div[@class='item-box']/div[@class='product-item']/div[@class='details']/h2[@class='product-title']")).getText().
+                filter(product -> product.
+                        findElement(productBy).getText().
                         equals(productName)).findFirst().orElse(null);
         return prod;
     }
@@ -56,11 +59,11 @@ public class ProductCatalogue extends AbstractComponent {
         prod.findElement(addToCart).click();
         waitForElementToDisAppearTh(animation);
 
-      return prod;
+        return prod;
     }
 
     public CartPage AddToCart() throws InterruptedException {
-        CartPage cartPage=new CartPage(driver);
+        CartPage cartPage = new CartPage(driver);
         driver.findElement(addToCart2).click();
         waitForElementToDisAppearTh(animation);
         waitForElementToDisAppear(massage);
